@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p class="text"></p>
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+    <script>
+      $(function () {
+        //只要抓一次的資料
+        let memInfoitem = {
+          CART_SERIAL_NUMBER: 10,
+          MEMBER_SERIAL_NUMBER: 1636001,
+          CART_CREATE_TIME: new Date(),
+        };
+        //Tue Jul 12 2016 11:35:48 GMT+0800 (CST)
+        //CART_CREATE_TIME:new Date().getTime()   時間戳
+        //https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part3/datetime.html
+
+        //商品資料
+        let item1 = {
+          ITEM_SERIAL_NUMBER: "87878701",
+          ITEM_NAME: "尾玉牛肉麵",
+          ITEM_PRICE: 187,
+          ITEM_QUANTITY: 3,
+        };
+
+        let item2 = {
+          ITEM_SERIAL_NUMBER: "87878702",
+          ITEM_NAME: "夏慕妮妮餐券",
+          ITEM_PRICE: 1250,
+          ITEM_QUANTITY: 1,
+        };
+
+        let item3 = {
+          ITEM_SERIAL_NUMBER: "87878702",
+          ITEM_NAME: "喜賓登餐券",
+          ITEM_PRICE: 1250,
+          ITEM_QUANTITY: 1,
+        };
+
+        //儲存一次性的陣列(可不用存進陣列)
+        // let memInfo = [];
+        //儲存商品的陣列
+        let memcart = [];
+
+        // memInfo.push(memInfoitem);
+        memcart.push(item1);
+        memcart.push(item2);
+        memcart.push(item3);
+
+        console.log(memInfoitem); //方便測試
+        console.log(memcart);
+
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+        sessionStorage.setItem("memInfo", JSON.stringify(memInfoitem));
+
+        //結帳按鈕儲存總價至local(訂單請參照名稱get出來)
+        // $(".site-btn").on("click", () => {
+        //   localStorage.setItem("Cart_total", total);
+        // });
+
+        ///測試增加商品(使用時請把memcart1去掉) 需思考量點為不同頁面間可丟入同陣列嗎?
+        $(".add").click(() => {
+          let memcart1 = [];
+          let Item = {
+            ITEM_SERIAL_NUMBER: 87878702,
+            ITEM_NAME: "乾檸檬雞排",
+            ITEM_PRICE: 600,
+            ITEM_QUANTITY: 1,
+          };
+          memcart1.push(newItem);
+          sessionStorage.setItem("memcart_data", JSON.stringify(memcart1));
+        });
+      });
+    </script>
+  </body>
+</html>

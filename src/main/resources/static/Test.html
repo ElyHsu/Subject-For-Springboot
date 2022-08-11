@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card-deck cart_body">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Cat</h5>
+
+            <div class="form-row mb-3">
+              <div class="col">
+                <p class="card-text">$500</p>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control amount" />
+              </div>
+            </div>
+            <button class="btn btn-info btn-block add_cart" data-price="500">
+              加到購物車
+            </button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Dog</h5>
+
+            <div class="form-row mb-3">
+              <div class="col">
+                <p class="card-text">$600</p>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control amount" />
+              </div>
+            </div>
+            <button class="btn btn-info btn-block add_cart" data-price="600">
+              加到購物車
+            </button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Bear</h5>
+
+            <div class="form-row mb-3">
+              <div class="col">
+                <p class="card-text">$800</p>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control amount" />
+              </div>
+            </div>
+            <button class="btn btn-info btn-block add_cart" data-price="800">
+              加到購物車
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="pt-4">
+        <h3>購物車</h3>
+        <a class="btn btn-info text-white" id="clear">清空購物車</a>
+        <ul id="cart"></ul>
+        總價: <span id="total"></span> 元
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+    <script>
+      var cart = [];
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      setCart();
+
+      function setCart() {
+        var cartList = "",
+          s_price = 0,
+          total = 0;
+        for (let $i = 0; $i < cart.length; $i++) {
+          s_price = cart[$i]["price"] * cart[$i]["amount"];
+          total += s_price;
+          cartList += `<li> ${cart[$i]["name"]} , 單價: ${cart[$i]["price"]}, 數量: ${cart[$i]["amount"]}, 總價: ${s_price}</li>`;
+        }
+        $("#cart").empty().append(cartList);
+        $("#total").text(total);
+      }
+
+      $("#clear").click(function () {
+        cart = [];
+        sessionStorage.removeItem("cart");
+        setCart();
+      });
+      //增加商品進購物車
+      $(".add_cart").click(function () {
+        let product = $(this).closest(".card-body");
+        let newItem = {
+          name: product.find(".card-title").text(),
+          price: $(this).data("price"),
+          amount: product.find(".amount").val(),
+        };
+        cart.push(newItem);
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+        setCart();
+
+        /////迴圈測試程式
+        //  環圈顯示
+        // $.each(memcart_data, function (index, item) {
+        //   var html = "";
+        //   html += `
+        //     <tr id="tr_cart" class="${item.ITEM_SERIAL_NUMBER}">
+        //         <td class="shoping__cart__item">
+        //           <h5><span id="product_name" class="card-title">${
+        //             item.ITEM_NAME
+        //           }</span></h5></td>
+        //         <td class="shoping__cart__price">
+        //           <span id="price" class="card-text">${
+        //             item.ITEM_PRICE
+        //           }元</span></td>
+        //         <td class="shoping__cart__quantity">
+        //           <div class="quantity">
+        //             <div class="pro-qty add_cart">
+        //               <input type="text" value=" ${
+        //                 item.ITEM_QUANTITY
+        //               }" class="qy_val amount" />
+        //          </div>
+        //               </div></td>
+        //               <td class="shoping__cart__total">
+        //               <span id="price_total"></span>${
+        //                 item.ITEM_PRICE * item.ITEM_QUANTITY
+        //               } </td>
+        //                   <td class="shoping__cart__item__close">
+        //               <span class="icon_close"></span>
+        //             </td>
+        //                   </tr>  `;
+        //   price = memcart_data.ITEM_PRICE * memcart_data.ITEM_QUANTITY;
+        //   console.log(price);
+        //   $("#cart_body").append(html);
+        //   $("#total").html();
+        // });
+      });
+    </script>
+  </body>
+</html>

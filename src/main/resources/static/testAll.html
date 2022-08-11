@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- get-coupon -->
+    <div>查詢優惠券</div>
+    <!--     <form action="CouponSelect" method="post" target="nm_iframe"> -->
+    <!-- id="form_get" target="nm_iframe" -->
+    <!-- 要用action才能顯示白板 -->
+    <!-- form預設會跳轉 -->
+    <!-- <label for="Type CouponSerialNumber">Type CouponSerialNumber: </label>
+      <input name="couponserialnumber" /> <br /> -->
+    <label for="Type CouponName">Type CouponName: </label>
+    <input name="couponname" id="SELECT_COUPON_NAME" /> <br />
+    <button id="btn_get">查詢</button>
+    <!--     </form> -->
+    <hr />
+    <div>資訊顯示</div>
+    <div>優惠券名稱:<span id="csu"></span></div>
+    <div>開始日期:<span id="sd"></span></div>
+    <div>結束日期:<span id="ed"></span></div>
+    <div>回饋數:<span id="rf"></span></div>
+    <hr />
+    <div>所有優惠券查詢</div>
+    <input
+      type="button"
+      name="couponnameall"
+      value="couponnameall"
+      id="SELECT_COUPON_NAMEAll"
+    />
+    <div class="task_list_parent">
+      <ul class="task_list" display:none></ul>
+    </div>
+    <!-- <iframe id="id_iframe" name="nm_iframe"></iframe> -->
+    <!-- <iframe id="id_iframe" name="nm_iframe"></iframe> -->
+    <!-- <iframe id="id_iframe" name="nm_iframe"></iframe> -->
+    <!-- <iframe id="id_iframe" name="nm_iframe"></iframe> -->
+    <!-- <iframe id="id_iframe" name="nm_iframe"></iframe> -->
+    <!-- style="display: none" -->
+
+    <hr style="border: 1px dotted" color="green" />
+    <div>新增優惠券</div>
+    <!-- <label for="COUPONSERIALNUMBER">COUPON_SERIAL_NUMBER: </label> -->
+    <!-- <input id="COUPONSERIALNUMBER" /> <br /> -->
+    <label for="COUPONNAME"> COUPON_NAME: </label>
+    <input id="COUPONNAME" /> <br />
+    <label for="STARTDATE"> START_DATE: </label>
+    <input id="STARTDATE" type="date" /> <br />
+    <label for="ENDDATE">END_DATE: </label>
+    <input id="ENDDATE" type="date" /> <br />
+    <label for="REFUNDPERCENT">REFUND_PERCENT: </label>
+    <input id="REFUNDPERCENT" /> <br />
+    <button id="btn_new">新增優惠券</button>
+    <button id="btn_put">修改優惠券</button>
+
+    <!-- jquery API-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- axios API -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- 後端傳輸到前端 -->
+    <script>
+      $(function () {
+        ////select all   (axios 不能用)
+        // axios
+        //   .get("Coupon")
+        //   .then((data) => {
+        //     console.log(data);
+        //     $.each(data, function (index, item) {
+        //       var html = "";
+        //       html += `
+        //               <li display:none>${item.couponname}</li>
+        //               <li display:none>${item.startdate}</li>
+        //               <li display:none>${item.enddate}</li>
+        //               <li display:none>${item.refundpercent}</li>
+        //          `;
+        //       $("ul.task_list").append(html);
+        //     });
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
+        //
+        $("#SELECT_COUPON_NAMEAll").on("click", () => {
+          fetch("Coupon", {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => {
+              return res.json();
+            }) //使用 .json() 解析資料
+            .then((res) => {
+              console.log(res);
+              $.each(res, function (index, item) {
+                var html = "";
+                html += `
+                          <div>優惠券名稱:${item.couponname}</div>
+                          <div>開始日期:${item.startdate}</div>
+                          <div>結束日期:${item.enddate}</div>
+                          <div>回饋數:${item.refundpercent}</div>
+                     `;
+                $("ul.task_list").append(html);
+                // for (var i; i < res.index.length(); i++) {
+                //   $("ul.task_list").html(item.couponname);
+                // }
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+
+        //select-couponname
+        $("#btn_get").on("click", () => {
+          const url = "CouponSelect";
+          const couponName = $("#SELECT_COUPON_NAME").val();
+          //
+          axios //比較不適合一次跑出全部
+            .post(url, { couponname: couponName })
+            .then((res) => {
+              console.log(res);
+              // $("span#csu").html(Object.entries(res.data));
+              $("span#csu").html(res.data.couponname);
+              $("span#sd").html(res.data.startdate);
+              $("span#ed").html(res.data.enddate);
+              $("span#rf").html(res.data.refundpercent);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          //
+          // fetch(url, {
+          //   method: "post",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify({
+          //     couponname: couponName,
+          //   }),
+          // })
+          //   .then((res) => {
+          //     return res.json();
+          //   }) //使用 .json() 解析資料
+          //   .then((res) => {
+          //     console.log(res);
+          //     $("span#csu").html(res.couponname);
+          //     $("span#sd").html(res.startdate);
+          //     $("span#ed").html(res.enddate);
+          //     $("span#rf").html(res.refundpercent);
+          //   });
+        });
+
+        //insert-coupon-post到後端
+        $("#btn_new").on("click", () => {
+          const COUPONSERIALNUMBER = $("#COUPONSERIALNUMBER").val() || null;
+          const COUPONNAME = $("#COUPONNAME").val() || null;
+          const STARTDATE = $("#STARTDATE").val() || null;
+          const ENDDATE = $("#ENDDATE").val() || null;
+          const REFUNDPERCENT = $("#REFUNDPERCENT").val() || null;
+          const url = "Coupon";
+          //   axios
+          //     .post("Coupon", {
+          //       couponserialnumber: COUPONSERIALNUMBER,
+          //       couponname: COUPONNAME,
+          //       startdate: STARTDATE,
+          //       enddate: ENDDATE,
+          //       refundpercent: REFUNDPERCENT,
+          //     })
+          //     .then((res) => {
+          //       const msg = res.data.errMsg ?? "新增成功";
+          //       alert(msg);
+          //     });
+          // });
+
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              // couponserialnumber: COUPONSERIALNUMBER,
+              couponname: COUPONNAME,
+              startdate: STARTDATE,
+              enddate: ENDDATE,
+              refundpercent: REFUNDPERCENT,
+              //這裡要跟java實體變數一樣
+            }),
+          })
+            .then((res) => res.json()) //使用 .json() 解析資料
+            .then((body) => {
+              const msg = body.errMsg ?? "新增成功";
+              alert(msg);
+            });
+        });
+
+        //update-coupon-put到後端
+        $("#btn_put").on("click", () => {
+          const url = "Coupon";
+          axios
+            .put(url, {
+              couponSerialNumber: COUPON_SERIAL_NUMBER.val(),
+              couponName: COUPON_NAME.val(),
+              startDate: START_DATE.val(),
+              endDate: END_DATE.val(),
+              refundPercent: REFUND_PERCENT.val(),
+            })
+            .then((res) => {
+              const msg = res.data.errMsg ?? "修改成功";
+              alert(msg);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      th,
+      td {
+        border: 2px solid lightblue;
+        text-align: center;
+        padding: 50px;
+        font-size: 30px;
+      }
+      #btn,
+      #btn2,
+      #btn3,
+      #btn4,
+      #btn5,
+      #btn6,
+      #btn7,
+      #btn8,
+      a {
+        font-size: 20px;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Ogani Template" />
+    <meta name="keywords" content="Ogani, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ogani | Template</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+  </head>
+  <body>
+    <input type="button" id="btn" value="尾玉牛肉麵++" class="site-btn" />
+    <input type="button" id="btn5" value="尾玉牛肉麵--" class="site-btn" />
+    <input type="button" id="btn2" value="曼當勞++" class="site-btn" />
+    <input type="button" id="btn6" value="曼當勞--" class="site-btn" />
+    <input type="button" id="btn3" value="吉野家++" class="site-btn" />
+    <input type="button" id="btn7" value="吉野家--" class="site-btn" />
+    <input type="button" id="btn4" value="肯德基++" class="site-btn" />
+    <input type="button" id="btn8" value="肯德基--" class="site-btn" />
+    <!-- <button id="btn">尾玉牛肉麵++</button>
+    <button id="btn2">曼當勞++</button>
+    <button id="btn3">吉野家++</button>
+    <button id="btn4">肯德基++</button> -->
+    <a href="./shoping-cart.html">買帳啦!!</a>
+    <table>
+      <thead>
+        <tr>
+          <th>品名</th>
+          <th>價錢</th>
+          <th>數量</th>
+        </tr>
+      </thead>
+      <tbody id="userData"></tbody>
+    </table>
+
+    <script>
+      const userData = document.querySelector("#userData");
+      const btn = document.querySelector("#btn");
+
+      // btn
+      btn.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878701) {
+            e.itemquantity++;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+      btn5.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878701) {
+            e.itemquantity--;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+
+      btn2.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878703) {
+            e.itemquantity++;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+      btn6.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878703) {
+            e.itemquantity--;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+
+      btn3.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878707) {
+            e.itemquantity++;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+      btn7.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878707) {
+            e.itemquantity--;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+
+      btn4.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878702) {
+            e.itemquantity++;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+      btn8.onclick = () => {
+        let memcart = JSON.parse(sessionStorage.getItem("memcart_data"));
+        memcart.map((e) => {
+          if (e.itemserialnumber === 87878702) {
+            e.itemquantity--;
+          }
+          return { ...e };
+        });
+        userHtml(memcart);
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+      };
+
+      // html
+      const userHtml = (itemname) => {
+        userData.innerHTML = itemname
+          .map(({ itemserialnumber, itemname, itemprice, itemquantity }) =>
+            userTemplate(itemserialnumber, itemname, itemprice, itemquantity)
+          )
+          .join("");
+      };
+
+      // template
+      const userTemplate = (
+        itemserialnumber,
+        itemname,
+        itemprice,
+        itemquantity
+      ) => {
+        return `<tr data-id="${itemserialnumber}">
+          <td>${itemname}</td>
+          <td>${itemprice}</td>
+          <td>${itemquantity}</td>
+        </tr>`;
+      };
+
+      // init
+      const init = () => {
+        /*
+         * 1.解開註解新增 sessionStorage
+         * 2.新增完後再把 65~70 註解了
+         */
+        const memcart = [
+          {
+            itemserialnumber: 87878701,
+            itemname: "尾玉牛肉麵",
+            itemprice: 187,
+            itemquantity: 0,
+          },
+          {
+            itemserialnumber: 87878703,
+            itemname: "喜賓登餐券",
+            itemprice: 1350,
+            itemquantity: 0,
+          },
+          {
+            itemserialnumber: 87878707,
+            itemname: "pizza hut",
+            itemprice: 21,
+            itemquantity: 0,
+          },
+          {
+            itemserialnumber: 87878702,
+            itemname: "夏慕妮妮餐券",
+            itemprice: 1250,
+            itemquantity: 0,
+          },
+        ];
+        sessionStorage.setItem("memcart_data", JSON.stringify(memcart));
+        let userData = JSON.parse(sessionStorage.getItem("memcart_data"));
+        userHtml(userData);
+      };
+      window.addEventListener("load", init);
+    </script>
+  </body>
+</html>
