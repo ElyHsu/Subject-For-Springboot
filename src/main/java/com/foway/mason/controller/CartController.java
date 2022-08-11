@@ -28,21 +28,17 @@ public class CartController {
 //			System.out.println("cartobj=" + cartlist);
 //		}
 
-		for (int i = 0; i < cart.itemlist.size(); i++) {     //一般用法
-			System.out.println("cartobj=" + cart.itemlist);
-
-		}
+//		for (int i = 0; i < cart.itemlist.size(); i++) {     //一般用法
+//			System.out.println("cartobj=" + cart.itemlist);
+//
+//		}
 		//新增訂單主檔+訂單細項
 		String orderresult = orderMainFileHibernateService.orderMaininsert(cart.couponname, cart, cart.itemlist,
 				cart.carttotal);
 		System.out.println("新增訂單主檔+訂單細項資料庫狀態=" + orderresult);
 		
 		//發送訂單成功郵件
-		String to = "map60915@gmail.com";
-		String subject = "訂單成立通知";
-		String ch_name = "林先生";
-		String messageText = "親愛的 " + ch_name + " 您好，您的訂單已成立，會盡速為您出貨!! " ;
-		String mailsuc= mailService.sendMail(to, subject, messageText);
+		String mailsuc= mailService.mailtoclient();
 		System.out.println(mailsuc);
 		
 	}

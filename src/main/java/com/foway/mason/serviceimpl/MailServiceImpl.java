@@ -20,23 +20,28 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.foway.mason.dao.OrderMainFileDao;
 import com.foway.mason.service.MailService;
 
 @Service
 public class MailServiceImpl implements MailService {
+
 	private final static String HOST = "smtp.gmail.com";
 	private final static String AUTH = "true";
 	private final static String PORT = "587";
 	private final static String STARTTLE_ENABLE = "true";
 	private final static String SENDER = "map60915@gmail.com";
 	private final static String PASSWORD = "mzkdmwmkuuunxzug";
+	@Autowired
+	OrderMainFileDao orderMainFileDao;
 
 //  設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
 	@Transactional
-	public String sendMail(String recipients, String mailSubject, String mailBody) {
+	public void sendMail(String recipients, String mailSubject, String mailBody) {
 //		String recipientCcs = "副本mail";
 		Properties props = new Properties();
 		props.put("mail.smtp.host", HOST);
@@ -107,21 +112,17 @@ public class MailServiceImpl implements MailService {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		return"寄信成功";
 	}
 
-//	public static void main(String args[]) {
-//
-//		String to = "map60915@gmail.com";
-//
-//		String subject = "訂單成立通知";
-//
-//		String ch_name = "林先生";
-//		String messageText = "親愛的 " + ch_name + " 您好，您的訂單已成立，會盡速為您出貨!! " ;
-//
-//		MailService mailService = new MailService();
-//		mailService.sendMail(to, subject, messageText);
-//
-//	}
-
+	// 寄信&提供訂單編號
+	@Transactional
+	public String mailtoclient() {
+		String to = "map60915@gmail.com";
+		String subject = "訂單成立通知";
+		String ch_name = "林先生";
+		String messageText = "親愛的 " + ch_name + " 您好，您的訂單(訂單編號:" + orderMainFileDao.selectorderserialnumber()
+				+ ")已成立，會盡速為您出貨!! ";
+		sendMail(to, subject, messageText);
+		return "寄信成功";
+	}
 }
