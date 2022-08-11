@@ -681,7 +681,7 @@ $("#golden_use").on("click", () => {
               alert(msg);
               const couponnamejstr=body.couponnamejstr;  //coupon流水號
               console.log("couponname="+couponnamejstr);
-              sessionStorage.setItem("couponnamejstr",JSON.stringify(couponnamejstr));//流水號存到local
+              sessionStorage.setItem("couponnamejstr",JSON.stringify(couponnamejstr));//流水號存到local，servlet+Hibernate時不用字串化
             })
         });
 
