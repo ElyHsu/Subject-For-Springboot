@@ -16,7 +16,7 @@ public class CartController {
 	OrderMainFileService orderMainFileHibernateService;
 	@Autowired
 	MailService mailService;
-	
+
 //訂單生成於資料庫區
 	@PostMapping("CartServlet")
 	public void cartfromhtml(@RequestBody Cart cart) {
@@ -24,23 +24,23 @@ public class CartController {
 //		System.out.println("goldremaining=" + cart.goldremaining);// 測試購物金接收
 //		System.out.println("carttotal=" + cart.carttotal);// 測試購物金接收
 
-//		for (Cartlist cartlist : cart.cartlist) { // 測試商品接收(疊代用法)
+//		for (Cartlist itemlist : cart.itemlist) { // 測試商品接收(疊代用法)
 //			System.out.println("cartobj=" + cartlist);
 //		}
 
-//		for (int i = 0; i < cart.itemlist.size(); i++) {     //一般用法
+//		for (int i = 0; i < cart.itemlist.size(); i++) {     
 //			System.out.println("cartobj=" + cart.itemlist);
 //
 //		}
-		//新增訂單主檔+訂單細項
+		// 新增訂單主檔+訂單細項
 		String orderresult = orderMainFileHibernateService.orderMaininsert(cart.couponname, cart, cart.itemlist,
 				cart.carttotal);
-		System.out.println("新增訂單主檔+訂單細項資料庫狀態=" + orderresult);
-		
-		//發送訂單成功郵件
-		String mailsuc= mailService.mailtoclient();
+		System.out.println("訂單主檔+細項狀態=" + orderresult);
+
+		// 發送訂單成功郵件
+		String mailsuc = mailService.mailtoclient();
 		System.out.println(mailsuc);
-		
+
 	}
 
 }

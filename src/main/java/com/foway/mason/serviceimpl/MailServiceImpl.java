@@ -113,6 +113,7 @@ public class MailServiceImpl implements MailService {
 	}
 
 	// 寄信&提供訂單編號
+	@Transactional
 	public String mailtoclient() {
 		String to = "map60915@gmail.com";
 		String subject = "訂單成立通知";
