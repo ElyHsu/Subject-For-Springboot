@@ -40,7 +40,6 @@ public class MailServiceImpl implements MailService {
 	OrderMainFileDao orderMainFileDao;
 
 //  設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
-	@Transactional
 	public void sendMail(String recipients, String mailSubject, String mailBody) {
 //		String recipientCcs = "副本mail";
 		Properties props = new Properties();
@@ -63,7 +62,6 @@ public class MailServiceImpl implements MailService {
 
 		try {
 //			設定Email Message start
-
 //			設定寄件人、收件人、副本、主旨
 			message.setSentDate(new Date());
 			message.setHeader("Content-Type", "text/html; charset=UTF-8");
@@ -115,7 +113,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	// 寄信&提供訂單編號
-	@Transactional
 	public String mailtoclient() {
 		String to = "map60915@gmail.com";
 		String subject = "訂單成立通知";
