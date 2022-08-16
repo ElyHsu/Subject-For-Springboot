@@ -34,8 +34,8 @@ public class MailServiceImpl implements MailService {
 	private final static String AUTH = "true";
 	private final static String PORT = "587";
 	private final static String STARTTLE_ENABLE = "true";
-	private final static String SENDER = "map60915@gmail.com";
-	private final static String PASSWORD = "mzkdmwmkuuunxzug";
+	private final static String SENDER = "mapp.hsu@gmail.com";
+	private final static String PASSWORD = "lwzhqgiogyzvkcse";
 	@Autowired
 	OrderMainFileDao orderMainFileDao;
 
@@ -115,7 +115,7 @@ public class MailServiceImpl implements MailService {
 	// 寄信&提供訂單編號
 	@Transactional
 	public String mailtoclient() {
-		String to = "map60915@gmail.com";
+		String to = "mapp.hsu@gmail.com";
 		String subject = "訂單成立通知";
 		String ch_name = "林先生";
 		String messageText = "親愛的 " + ch_name + " 您好，您的訂單(訂單編號:" + orderMainFileDao.selectorderserialnumber()
