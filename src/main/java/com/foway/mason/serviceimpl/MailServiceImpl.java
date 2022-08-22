@@ -35,7 +35,7 @@ public class MailServiceImpl implements MailService {
 	private final static String PORT = "587";
 	private final static String STARTTLE_ENABLE = "true";
 	private final static String SENDER = "mapp.hsu@gmail.com";
-	private final static String PASSWORD = "lwzhqgiogyzvkcse";
+
 	@Autowired
 	OrderMainFileDao orderMainFileDao;
 
